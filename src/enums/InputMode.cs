@@ -1,0 +1,7 @@
+namespace Dwarf.GLFW;
+
+public enum InputMode {
+  GLFW_CURSOR = 0x00033001,
+  GLFW_STICKY_KEYS = 0x00033002,
+  GLFW_STICKY_MOUSE_BUTTONS = 0x00033003
+}

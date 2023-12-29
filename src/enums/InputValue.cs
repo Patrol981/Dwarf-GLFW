@@ -1,0 +1,9 @@
+namespace Dwarf.GLFW;
+
+public enum InputValue {
+  GLFW_CURSOR_NORMAL = 0x00034001,
+  GLFW_CURSOR_HIDDEN = 0x00034002,
+  GLFW_CURSOR_DISABLED = 0x00034003,
+  GL_TRUE = 1,
+  GL_FALSE = 0
+}
