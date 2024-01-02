@@ -40,7 +40,6 @@ public sealed class Loader {
     ];
 
     foreach (string path in paths) {
-      Console.WriteLine(path);
       if (File.Exists(path)) {
         return path;
       }
