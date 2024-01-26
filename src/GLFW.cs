@@ -8,7 +8,7 @@
 using System.Runtime.InteropServices;
 
 using Dwarf.GLFW.Core;
-
+using Dwarf.GLFW.OpenGL;
 using Vortice.Vulkan;
 
 using static Dwarf.GLFW.Core.Callbacks;
@@ -103,6 +103,8 @@ public sealed class GLFW {
   public unsafe static void glfwSetWindowPos(GLFWwindow* window, int xpos, int ypos) => s_glfwSetWindowPos(window, xpos, ypos);
 
   public static void glfwPollEvents() => s_glfwPollEvents();
+  public unsafe static void glfwSwapBuffers(GLFWwindow* window) => s_glfwSwapBuffers(window);
+  public unsafe static void glfwMakeContextCurrent(GLFWwindow* window) => s_glfwMakeContextCurrent(window);
   public static void glfwWaitEvents() => s_glfwWaitEvents();
 
   public static nint glfwGetRequiredInstanceExtensions(out int count) => s_glfwGetRequiredInstanceExtensions(out count);
@@ -125,6 +127,9 @@ public sealed class GLFW {
   public unsafe static VkResult glfwCreateWindowSurface(VkInstance instance, GLFWwindow* window, void* allocator, VkSurfaceKHR* pSurface) {
     return (VkResult)s_glfwCreateWindowSurface(instance, window, allocator, pSurface);
   }
+
+  // GL
+  public unsafe static GLFWglproc glfwGetProcAddress(byte* procname) => s_glfwGetProcAddress(procname);
 
   unsafe static GLFW() {
     s_library = LoadGLFWLibrary();
@@ -155,6 +160,8 @@ public sealed class GLFW {
     s_glfwGetWin32Window = LoadFunction<glfwGetWin32Window_t>(nameof(glfwGetWin32Window));
 
     s_glfwPollEvents = LoadFunction<glfwPollEvents_t>(nameof(glfwPollEvents));
+    s_glfwSwapBuffers = LoadFunction<glfwSwapBuffers_t>(nameof(glfwSwapBuffers));
+    s_glfwMakeContextCurrent = LoadFunction<glfwMakeContextCurrent_t>(nameof(glfwMakeContextCurrent));
     s_glfwWaitEvents = LoadFunction<glfwWaitEvents_t>(nameof(glfwWaitEvents));
 
     s_glfwSetWindowIcon = LoadFunction<glfwSetWindowIcon_t>(nameof(glfwSetWindowIcon));
@@ -180,6 +187,9 @@ public sealed class GLFW {
     // Vulkan
     s_glfwGetRequiredInstanceExtensions = LoadFunction<glfwGetRequiredInstanceExtensions_t>(nameof(glfwGetRequiredInstanceExtensions));
     s_glfwCreateWindowSurface = (delegate* unmanaged[Cdecl]<VkInstance, GLFWwindow*, void*, VkSurfaceKHR*, int>)GetFunctionPointer(nameof(glfwCreateWindowSurface));
+
+    // GL
+    s_glfwGetProcAddress = LoadFunction<glfwGetProcAddress_t>(nameof(glfwGetProcAddress));
   }
 
   private static IntPtr LoadGLFWLibrary() {

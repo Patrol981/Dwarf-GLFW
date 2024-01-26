@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Dwarf.GLFW.OpenGL;
 
 namespace Dwarf.GLFW.Core;
 
@@ -27,10 +28,10 @@ public sealed class FunctionPointers {
   internal unsafe delegate void glfwGetVersion_t(int* major, int* minor, int* revision);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  public unsafe delegate GLFWmonitor* glfwGetPrimaryMonitor_t();
+  internal unsafe delegate GLFWmonitor* glfwGetPrimaryMonitor_t();
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  public unsafe delegate void glfwGetWindowSize_t(GLFWwindow* window, out int width, out int height);
+  internal unsafe delegate void glfwGetWindowSize_t(GLFWwindow* window, out int width, out int height);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate nint glfwGetRequiredInstanceExtensions_t(out int count);
@@ -58,16 +59,22 @@ public sealed class FunctionPointers {
   internal delegate void glfwInitHint_t(int hint, int value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  public unsafe delegate GLFWwindow* glfwCreateWindow_t(int width, int height, byte* title, GLFWmonitor* monitor, GLFWwindow* share);
+  internal unsafe delegate GLFWwindow* glfwCreateWindow_t(int width, int height, byte* title, GLFWmonitor* monitor, GLFWwindow* share);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  public unsafe delegate int glfwWindowShouldClose_t(GLFWwindow* window);
+  internal unsafe delegate int glfwWindowShouldClose_t(GLFWwindow* window);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  public unsafe delegate void glfwShowWindow_t(GLFWwindow* window);
+  internal unsafe delegate void glfwShowWindow_t(GLFWwindow* window);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void glfwPollEvents_t();
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal unsafe delegate void glfwSwapBuffers_t(GLFWwindow* window);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal unsafe delegate void glfwMakeContextCurrent_t(GLFWwindow* window);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void glfwWaitEvents_t();
@@ -76,7 +83,7 @@ public sealed class FunctionPointers {
   internal unsafe delegate void glfwMaximizeWindow_t(GLFWwindow* window);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  public unsafe delegate void* glfwCreateCursor_t(GLFWImage* image, int xhot, int yhot);
+  internal unsafe delegate void* glfwCreateCursor_t(GLFWImage* image, int xhot, int yhot);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal unsafe delegate void glfwSetCursor_t(GLFWwindow* window, void* cursor);
@@ -86,6 +93,10 @@ public sealed class FunctionPointers {
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate double glfwGetTime_t();
+
+  // GL
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  public unsafe delegate GLFWglproc glfwGetProcAddress_t(byte* procname);
 
 
   internal static glfwSetWindowPos_t s_glfwSetWindowPos = null!;
@@ -112,8 +123,13 @@ public sealed class FunctionPointers {
   internal static glfwGetVideoMode_t s_glfwGetVideoMode = null!;
   internal static glfwSetWindowIcon_t s_glfwSetWindowIcon = null!;
   internal static glfwPollEvents_t s_glfwPollEvents = null!;
+  internal static glfwSwapBuffers_t s_glfwSwapBuffers = null!;
+  internal static glfwMakeContextCurrent_t s_glfwMakeContextCurrent = null!;
   internal static glfwWaitEvents_t s_glfwWaitEvents = null!;
   internal static glfwGetRequiredInstanceExtensions_t s_glfwGetRequiredInstanceExtensions = null!;
   internal static glfwGetTime_t s_glfwGetTime = null!;
+
+  // GL
+  internal static glfwGetProcAddress_t s_glfwGetProcAddress = null!;
 
 }
