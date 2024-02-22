@@ -25,6 +25,9 @@ public sealed class Callbacks {
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   public unsafe delegate void glfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  public unsafe delegate void glfwWindowIconifyCallback(GLFWwindow* window, int iconified);
+
   // setters
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -48,6 +51,8 @@ public sealed class Callbacks {
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal unsafe delegate glfwMouseButtonCallback glfwSetMouseButtonCallback_t(GLFWwindow* window, glfwMouseButtonCallback callback);
 
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal unsafe delegate glfwWindowIconifyCallback glfwSetWindowIconifyCallback_t(GLFWwindow* window, glfwWindowIconifyCallback callback);
   //
 
   internal static glfwSetErrorCallback_t s_glfwSetErrorCallback;
@@ -57,4 +62,5 @@ public sealed class Callbacks {
   internal static glfwSetScrollCallback_t s_glfwSetScrollCallback;
   internal static glfwSetMouseButtonCallback_t s_glfwSetMouseButtonCallback;
   internal static glfwSetJoystickCallback_t s_glfwSetJoystickCallback;
+  internal static glfwSetWindowIconifyCallback_t s_glfwSetWindowIconifyCallback;
 }

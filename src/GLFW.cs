@@ -44,6 +44,7 @@ public sealed class GLFW {
   public unsafe static glfwJoystickCallback glfwSetJoystickCallback(glfwJoystickCallback callback) => s_glfwSetJoystickCallback(callback);
   public unsafe static glfwScrollCallback glfwSetScrollCallback(GLFWwindow* window, glfwScrollCallback callback) => s_glfwSetScrollCallback(window, callback);
   public unsafe static glfwMouseButtonCallback glfwSetMouseButtonCallback(GLFWwindow* window, glfwMouseButtonCallback callback) => s_glfwSetMouseButtonCallback(window, callback);
+  public unsafe static void glfwSetWindowIconifyCallback(GLFWwindow* window, glfwWindowIconifyCallback callback) => s_glfwSetWindowIconifyCallback(window, callback);
 
   public unsafe static void glfwInitHint(InitHintBool hint, bool value) => s_glfwInitHint((int)hint, value ? GLFW_TRUE : GLFW_FALSE);
   public unsafe static void glfwMaximizeWindow(GLFWwindow* window) => s_glfwMaximizeWindow(window);
@@ -149,6 +150,7 @@ public sealed class GLFW {
     s_glfwGetKey = LoadFunction<glfwGetKey_t>(nameof(glfwGetKey));
     s_glfwGetMouseButton = LoadFunction<glfwGetMouseButton_t>(nameof(glfwGetMouseButton));
 
+    s_glfwSetWindowIconifyCallback = LoadFunction<glfwSetWindowIconifyCallback_t>(nameof(glfwSetWindowIconifyCallback));
     s_glfwWindowHint = LoadFunction<glfwInitHint_t>(nameof(glfwWindowHint));
     s_glfwCreateWindow = LoadFunction<glfwCreateWindow_t>(nameof(glfwCreateWindow));
     s_glfwGetPrimaryMonitor = LoadFunction<glfwGetPrimaryMonitor_t>(nameof(glfwGetPrimaryMonitor));
