@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+
 using Dwarf.GLFW.OpenGL;
 
 namespace Dwarf.GLFW.Core;

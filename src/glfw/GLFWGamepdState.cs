@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace Dwarf.GLFW.Core;
 
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
-public unsafe readonly partial struct GLFWgamepadstate : IEquatable<GLFWgamepadstate> {
+public readonly unsafe partial struct GLFWgamepadstate : IEquatable<GLFWgamepadstate> {
   public char[] Buttons { get; } = null!;
   public float[] Axes { get; } = null!;
   public GLFWgamepadstate(nint handle) { Handle = handle; }

@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
 namespace Dwarf.GLFW;
 
@@ -9,10 +8,7 @@ public sealed class Loader {
     string libraryPath = GetNativeAssemblyPath(libraryName);
 
     IntPtr handle = LoadPlatformLibrary(libraryPath);
-    if (handle == IntPtr.Zero)
-      throw new DllNotFoundException($"failed to load {libraryName}.");
-
-    return handle;
+    return handle == IntPtr.Zero ? throw new DllNotFoundException($"failed to load {libraryName}.") : handle;
   }
   public static T LoadFunction<T>(IntPtr library, string name) {
     IntPtr functionPtr = NativeLibrary.GetExport(library, name);
@@ -57,10 +53,13 @@ public sealed class Loader {
 
   private static string TargetPlatform {
     get {
-      if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return "win";
-      if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) return "linux";
-      if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) return "osx";
-      else throw new PlatformNotSupportedException("target platform is unsupported.");
+      return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+        ? "win"
+        : RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+        ? "linux"
+        : RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
+        ? "osx"
+        : throw new PlatformNotSupportedException("target platform is unsupported.");
     }
   }
 

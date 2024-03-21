@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 
 using Dwarf.GLFW.Core;
 using Dwarf.GLFW.OpenGL;
+
 using Vortice.Vulkan;
 
 using static Dwarf.GLFW.Core.Callbacks;
@@ -27,33 +28,33 @@ public sealed class GLFW {
 
   #region mappings
 
-  private unsafe static readonly glfwWindowShouldClose_t s_glfwWindowShouldClose;
-  private unsafe static readonly delegate* unmanaged[Cdecl]<VkInstance, GLFWwindow*, void*, VkSurfaceKHR*, int> s_glfwCreateWindowSurface;
+  private static readonly unsafe glfwWindowShouldClose_t s_glfwWindowShouldClose;
+  private static readonly unsafe delegate* unmanaged[Cdecl]<VkInstance, GLFWwindow*, void*, VkSurfaceKHR*, int> s_glfwCreateWindowSurface;
 
   #endregion
 
-  public unsafe static bool glfwInit() => s_glfwInit() == GLFW_TRUE;
+  public static unsafe bool glfwInit() => s_glfwInit() == GLFW_TRUE;
   public static void glfwTerminate() => s_glfwTerminate();
-  public unsafe static void glfwGetVersion(int* major, int* minor, int* revision) => s_glfwGetVersion(major, minor, revision);
+  public static unsafe void glfwGetVersion(int* major, int* minor, int* revision) => s_glfwGetVersion(major, minor, revision);
 
 
-  public unsafe static glfwErrorCallback glfwSetErrorCallback(glfwErrorCallback callback) => s_glfwSetErrorCallback(callback);
-  public unsafe static glfwFramebufferCallback glfwSetFramebufferSizeCallback(GLFWwindow* window, glfwFramebufferCallback callback) => s_glfwSetFramebufferSizeCallback(window, callback);
-  public unsafe static glfwCursorPosCallback glfwSetCursorPosCallback(GLFWwindow* window, glfwCursorPosCallback callback) => s_glfwSetCursorPosCallback(window, callback);
-  public unsafe static glfwKeyCallback glfwSetKeyCallback(GLFWwindow* window, glfwKeyCallback callback) => s_glfwSetKeyCallback(window, callback);
-  public unsafe static glfwJoystickCallback glfwSetJoystickCallback(glfwJoystickCallback callback) => s_glfwSetJoystickCallback(callback);
-  public unsafe static glfwScrollCallback glfwSetScrollCallback(GLFWwindow* window, glfwScrollCallback callback) => s_glfwSetScrollCallback(window, callback);
-  public unsafe static glfwMouseButtonCallback glfwSetMouseButtonCallback(GLFWwindow* window, glfwMouseButtonCallback callback) => s_glfwSetMouseButtonCallback(window, callback);
-  public unsafe static void glfwSetWindowIconifyCallback(GLFWwindow* window, glfwWindowIconifyCallback callback) => s_glfwSetWindowIconifyCallback(window, callback);
+  public static unsafe glfwErrorCallback glfwSetErrorCallback(glfwErrorCallback callback) => s_glfwSetErrorCallback(callback);
+  public static unsafe glfwFramebufferCallback glfwSetFramebufferSizeCallback(GLFWwindow* window, glfwFramebufferCallback callback) => s_glfwSetFramebufferSizeCallback(window, callback);
+  public static unsafe glfwCursorPosCallback glfwSetCursorPosCallback(GLFWwindow* window, glfwCursorPosCallback callback) => s_glfwSetCursorPosCallback(window, callback);
+  public static unsafe glfwKeyCallback glfwSetKeyCallback(GLFWwindow* window, glfwKeyCallback callback) => s_glfwSetKeyCallback(window, callback);
+  public static unsafe glfwJoystickCallback glfwSetJoystickCallback(glfwJoystickCallback callback) => s_glfwSetJoystickCallback(callback);
+  public static unsafe glfwScrollCallback glfwSetScrollCallback(GLFWwindow* window, glfwScrollCallback callback) => s_glfwSetScrollCallback(window, callback);
+  public static unsafe glfwMouseButtonCallback glfwSetMouseButtonCallback(GLFWwindow* window, glfwMouseButtonCallback callback) => s_glfwSetMouseButtonCallback(window, callback);
+  public static unsafe void glfwSetWindowIconifyCallback(GLFWwindow* window, glfwWindowIconifyCallback callback) => s_glfwSetWindowIconifyCallback(window, callback);
 
-  public unsafe static void glfwInitHint(InitHintBool hint, bool value) => s_glfwInitHint((int)hint, value ? GLFW_TRUE : GLFW_FALSE);
-  public unsafe static void glfwMaximizeWindow(GLFWwindow* window) => s_glfwMaximizeWindow(window);
-  public unsafe static void glfwWindowHint(int hint, int value) => s_glfwWindowHint(hint, value);
-  public unsafe static void glfwWindowHint(WindowHintBool hint, bool value) => s_glfwWindowHint((int)hint, value ? GLFW_TRUE : GLFW_FALSE);
-  public unsafe static void glfwSetInputMode(GLFWwindow* window, int mode, int value) => s_glfwSetInputMode(window, mode, value);
-  public unsafe static void glfwSetWindowIcon(GLFWwindow* window, int count, GLFWImage* images) => s_glfwSetWindowIcon(window, count, images);
+  public static unsafe void glfwInitHint(InitHintBool hint, bool value) => s_glfwInitHint((int)hint, value ? GLFW_TRUE : GLFW_FALSE);
+  public static unsafe void glfwMaximizeWindow(GLFWwindow* window) => s_glfwMaximizeWindow(window);
+  public static unsafe void glfwWindowHint(int hint, int value) => s_glfwWindowHint(hint, value);
+  public static unsafe void glfwWindowHint(WindowHintBool hint, bool value) => s_glfwWindowHint((int)hint, value ? GLFW_TRUE : GLFW_FALSE);
+  public static unsafe void glfwSetInputMode(GLFWwindow* window, int mode, int value) => s_glfwSetInputMode(window, mode, value);
+  public static unsafe void glfwSetWindowIcon(GLFWwindow* window, int count, GLFWImage* images) => s_glfwSetWindowIcon(window, count, images);
 
-  public unsafe static void glfwSetWindowTitle(GLFWwindow* window, string title) {
+  public static unsafe void glfwSetWindowTitle(GLFWwindow* window, string title) {
     var ptr = Marshal.StringToHGlobalAnsi(title);
 
     try {
@@ -63,7 +64,7 @@ public sealed class GLFW {
     }
   }
 
-  public unsafe static GLFWwindow* glfwCreateWindow(int width, int height, string title, GLFWmonitor* monitor, GLFWwindow* share) {
+  public static unsafe GLFWwindow* glfwCreateWindow(int width, int height, string title, GLFWmonitor* monitor, GLFWwindow* share) {
     var ptr = Marshal.StringToHGlobalAnsi(title);
 
     try {
@@ -73,39 +74,39 @@ public sealed class GLFW {
     }
   }
 
-  public unsafe static void* glfwCreateCursor(GLFWImage* image, int xhot, int yhot) => s_glfwCreateCursor(image, xhot, yhot);
-  public unsafe static void glfwSetCursor(GLFWwindow* window, void* cursor) => s_glfwSetCursor(window, cursor);
-  public unsafe static void glfwDestroyCursor(void* cursor) => s_glfwDestroyCursor(cursor);
+  public static unsafe void* glfwCreateCursor(GLFWImage* image, int xhot, int yhot) => s_glfwCreateCursor(image, xhot, yhot);
+  public static unsafe void glfwSetCursor(GLFWwindow* window, void* cursor) => s_glfwSetCursor(window, cursor);
+  public static unsafe void glfwDestroyCursor(void* cursor) => s_glfwDestroyCursor(cursor);
   public static double glfwGetTime() => s_glfwGetTime();
 
-  public unsafe static bool glfwWindowShouldClose(GLFWwindow* window) => s_glfwWindowShouldClose(window) == GLFW_TRUE;
+  public static unsafe bool glfwWindowShouldClose(GLFWwindow* window) => s_glfwWindowShouldClose(window) == GLFW_TRUE;
 
-  public unsafe static void glfwGetWindowSize(GLFWwindow* window, out int width, out int height) => s_glfwGetWindowSize(window, out width, out height);
-  public unsafe static void glfwShowWindow(GLFWwindow* window) => glfwShowWindow(window);
-  public unsafe static void glfwDestroyWindow(GLFWwindow* window) => glfwDestroyWindow(window);
-  public unsafe static void* glfwGetWindowUserPointer(GLFWwindow* window) => s_glfwGetWindowUserPointer(window);
-  public unsafe static void glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) => s_glfwSetWindowUserPointer(window, pointer);
-  public unsafe static int glfwGetKey(GLFWwindow* window, int key) => s_glfwGetKey(window, key);
-  public unsafe static int glfwGetMouseButton(GLFWwindow* window, int button) => s_glfwGetMouseButton(window, button);
-  public unsafe static void glfwGetFramebufferSize(GLFWwindow* window, out int width, out int height) => s_glfwGetFramebufferSize(window, out width, out height);
+  public static unsafe void glfwGetWindowSize(GLFWwindow* window, out int width, out int height) => s_glfwGetWindowSize(window, out width, out height);
+  public static unsafe void glfwShowWindow(GLFWwindow* window) => glfwShowWindow(window);
+  public static unsafe void glfwDestroyWindow(GLFWwindow* window) => glfwDestroyWindow(window);
+  public static unsafe void* glfwGetWindowUserPointer(GLFWwindow* window) => s_glfwGetWindowUserPointer(window);
+  public static unsafe void glfwSetWindowUserPointer(GLFWwindow* window, void* pointer) => s_glfwSetWindowUserPointer(window, pointer);
+  public static unsafe int glfwGetKey(GLFWwindow* window, int key) => s_glfwGetKey(window, key);
+  public static unsafe int glfwGetMouseButton(GLFWwindow* window, int button) => s_glfwGetMouseButton(window, button);
+  public static unsafe void glfwGetFramebufferSize(GLFWwindow* window, out int width, out int height) => s_glfwGetFramebufferSize(window, out width, out height);
 
 
-  public unsafe static int glfwUpdateGamepadMappings(char* data) => s_glfwUpdateGamepadMappings(data);
-  public unsafe static char* glfwGetGamepadName(int jid) => s_glfwGetGamepadName(jid);
-  public unsafe static int glfwJoystickIsGamepad(int jid) => s_glfwJoystickIsGamepad(jid);
-  public unsafe static int glfwGetGamepadState(int jid, GLFWgamepadstate* state) => s_glfwGetGamepadState(jid, state);
-  public unsafe static int glfwJoystickPresent(int jid) => s_glfwJoystickPresent(jid);
-  public unsafe static float* glfwGetJoystickAxes(int jid, int* count) => s_glfwGetJoystickAxes(jid, count);
-  public unsafe static char* glfwGetJoystickButtons(int jid, int* count) => s_glfwGetJoystickButtons(jid, count);
+  public static unsafe int glfwUpdateGamepadMappings(char* data) => s_glfwUpdateGamepadMappings(data);
+  public static unsafe char* glfwGetGamepadName(int jid) => s_glfwGetGamepadName(jid);
+  public static unsafe int glfwJoystickIsGamepad(int jid) => s_glfwJoystickIsGamepad(jid);
+  public static unsafe int glfwGetGamepadState(int jid, GLFWgamepadstate* state) => s_glfwGetGamepadState(jid, state);
+  public static unsafe int glfwJoystickPresent(int jid) => s_glfwJoystickPresent(jid);
+  public static unsafe float* glfwGetJoystickAxes(int jid, int* count) => s_glfwGetJoystickAxes(jid, count);
+  public static unsafe char* glfwGetJoystickButtons(int jid, int* count) => s_glfwGetJoystickButtons(jid, count);
 
-  public unsafe static nint glfwGetWin32Window(GLFWwindow* window) => s_glfwGetWin32Window(window);
-  public unsafe static GLFWmonitor* glfwGetPrimaryMonitor() => s_glfwGetPrimaryMonitor();
-  public unsafe static GLFWvidmode* glfwGetVideoMode(GLFWmonitor* monitor) => s_glfwGetVideoMode(monitor);
-  public unsafe static void glfwSetWindowPos(GLFWwindow* window, int xpos, int ypos) => s_glfwSetWindowPos(window, xpos, ypos);
+  public static unsafe nint glfwGetWin32Window(GLFWwindow* window) => s_glfwGetWin32Window(window);
+  public static unsafe GLFWmonitor* glfwGetPrimaryMonitor() => s_glfwGetPrimaryMonitor();
+  public static unsafe GLFWvidmode* glfwGetVideoMode(GLFWmonitor* monitor) => s_glfwGetVideoMode(monitor);
+  public static unsafe void glfwSetWindowPos(GLFWwindow* window, int xpos, int ypos) => s_glfwSetWindowPos(window, xpos, ypos);
 
   public static void glfwPollEvents() => s_glfwPollEvents();
-  public unsafe static void glfwSwapBuffers(GLFWwindow* window) => s_glfwSwapBuffers(window);
-  public unsafe static void glfwMakeContextCurrent(GLFWwindow* window) => s_glfwMakeContextCurrent(window);
+  public static unsafe void glfwSwapBuffers(GLFWwindow* window) => s_glfwSwapBuffers(window);
+  public static unsafe void glfwMakeContextCurrent(GLFWwindow* window) => s_glfwMakeContextCurrent(window);
   public static void glfwWaitEvents() => s_glfwWaitEvents();
 
   public static nint glfwGetRequiredInstanceExtensions(out int count) => s_glfwGetRequiredInstanceExtensions(out count);
@@ -125,14 +126,14 @@ public sealed class GLFW {
     return array;
   }
 
-  public unsafe static VkResult glfwCreateWindowSurface(VkInstance instance, GLFWwindow* window, void* allocator, VkSurfaceKHR* pSurface) {
+  public static unsafe VkResult glfwCreateWindowSurface(VkInstance instance, GLFWwindow* window, void* allocator, VkSurfaceKHR* pSurface) {
     return (VkResult)s_glfwCreateWindowSurface(instance, window, allocator, pSurface);
   }
 
   // GL
-  public unsafe static GLFWglproc glfwGetProcAddress(byte* procname) => s_glfwGetProcAddress(procname);
+  public static unsafe GLFWglproc glfwGetProcAddress(byte* procname) => s_glfwGetProcAddress(procname);
 
-  unsafe static GLFW() {
+  static unsafe GLFW() {
     s_library = LoadGLFWLibrary();
 
     s_glfwInit = (delegate* unmanaged[Cdecl]<int>)GetFunctionPointer(nameof(glfwInit));
