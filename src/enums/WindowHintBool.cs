@@ -21,4 +21,8 @@ public enum WindowHintBool {
   DoubleBuffer = 0x00021010,
   SrgbCapable = 0x0002100E,
   ScaleToMonitor = 0x0002200,
+  RedBits = 0x00021001,
+  GreenBits = 0x00021002,
+  BlueBits = 0x00021003,
+  RefreshRate = 0x0002100F,
 }
