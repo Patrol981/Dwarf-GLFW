@@ -20,4 +20,5 @@ public enum WindowHintBool {
   Stereo = 0x0002100C,
   DoubleBuffer = 0x00021010,
   SrgbCapable = 0x0002100E,
+  ScaleToMonitor = 0x0002200,
 }
