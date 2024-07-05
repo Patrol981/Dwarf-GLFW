@@ -24,7 +24,7 @@ public sealed class GLFW {
   public const int GLFW_FALSE = 0;
 
   private static readonly IntPtr s_library;
-  private static unsafe delegate* unmanaged[Cdecl]<int> s_glfwInit;
+  private static readonly unsafe delegate* unmanaged[Cdecl]<int> s_glfwInit;
 
   #region mappings
 
@@ -111,15 +111,15 @@ public sealed class GLFW {
 
   public static nint glfwGetRequiredInstanceExtensions(out int count) => s_glfwGetRequiredInstanceExtensions(out count);
 
-  public static string[] glfwGetRequiredInstanceExtensions() {
+  public static unsafe VkUtf8String[] glfwGetRequiredInstanceExtensions() {
     nint ptr = s_glfwGetRequiredInstanceExtensions(out int count);
 
-    string[] array = new string[count];
+    VkUtf8String[] array = new VkUtf8String[count];
     if (count > 0 && ptr != 0) {
       var offset = 0;
       for (int i = 0; i < count; i++, offset += IntPtr.Size) {
         IntPtr p = Marshal.ReadIntPtr(ptr, offset);
-        array[i] = Marshal.PtrToStringAnsi(p)!;
+        array[i] = new VkUtf8String((byte*)p);
       }
     }
 
